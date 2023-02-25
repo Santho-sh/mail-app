@@ -29,13 +29,49 @@ function load_mailbox(mailbox) {
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
 
+  let emailView = document.querySelector('#emails-view')
   fetch(`/emails/${mailbox}`)
   .then(response => response.json())
   .then(emails => {
-      // Print emails
-      console.log(emails);
+      emails.forEach(email => {
 
-      // ... do something else with emails ...
+        // Sample output
+        // {
+        //   "id": 100,
+        //   "sender": "foo@example.com",
+        //   "recipients": ["bar@example.com"],
+        //   "subject": "Hello!",
+        //   "body": "Hello, world!",
+        //   "timestamp": "Jan 2 2020, 12:00 AM",
+        //   "read": false,
+        //   "archived": false
+        // },
+
+        const mails = document.createElement('div');
+        mails.classList.add('mail');
+        
+        const recipients = email.recipients;
+        const subject = email.subject;
+        const timestamp = email.timestamp;
+        
+        const reci = document.createElement('p');
+        reci.classList.add('mail-recipients');
+        reci.innerHTML = recipients;
+        mails.appendChild(reci);
+
+        const sub = document.createElement('p');
+        sub.classList.add('mail-subject');
+        sub.innerHTML = subject;
+        mails.appendChild(sub);
+
+        const time = document.createElement('p');
+        time.classList.add('mail-subject');
+        time.innerHTML = timestamp;
+        mails.appendChild(time);
+
+        emailView.appendChild(mails)
+        
+      })
   });
 
   // Show the mailbox name
