@@ -75,6 +75,7 @@ function load_mailbox(mailbox) {
 
         emailView.appendChild(mails)
 
+        load_mailbox('sent')
       })
   });
 }
