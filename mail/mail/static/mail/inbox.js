@@ -131,10 +131,10 @@ function mail_view(id){
   fetch(`/emails/${id}`)
   .then(response => response.json())
   .then(email => {
-      from.innerHTML = `From: ${email.sender}`;
-      to.innerHTML = `To: ${email.recipients}`;
-      subject.innerHTML = `Subject: ${email.subject}`;
-      timestamp.innerHTML = `Timestamp: ${email.timestamp}`;
+      from.innerHTML = `<b>From: </b>${email.sender}`;
+      to.innerHTML = `<b>To: </b>${email.recipients}`;
+      subject.innerHTML = `<b>Subject: </b>${email.subject}`;
+      timestamp.innerHTML = `<b>Timestamp: </b>${email.timestamp}`;
       body.innerHTML = email.body;
 
       console.log(body)
