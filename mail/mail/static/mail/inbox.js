@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
   load_mailbox('inbox');
 });
 
+
+
 function compose_email() {
 
   // Show compose view and hide other views
@@ -23,6 +25,7 @@ function compose_email() {
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
 }
+
 
 
 function load_mailbox(mailbox) {
@@ -72,7 +75,8 @@ function load_mailbox(mailbox) {
         sub.innerHTML = email.subject;
         mails.appendChild(sub);
 
-
+        // If user in inbox create archive button 
+        // Else Unarchive button
         const archive = document.createElement('button');
         archive.classList.add('btn', 'btn-sm', 'btn-outline-primary');
         if (mailbox === 'inbox'){
@@ -96,6 +100,7 @@ function load_mailbox(mailbox) {
 
       })
 
+      // Action for User click
       const archive = document.querySelector('.archive');
       const unarchive = document.querySelector('.unarchive');
 
@@ -112,23 +117,27 @@ function load_mailbox(mailbox) {
                   archived: true
               })
             });
-            load_mailbox('inbox');
-          // else show the email
-          }else if (event.target === unarchive) {
+          // Clicks unarchive button the unarchive email
+          } else if (event.target === unarchive) {
             fetch(`/emails/${id}`, {
               method: 'PUT',
               body: JSON.stringify({
                   archived: false
               })
             });
-            load_mailbox('archive');
+            load_mailbox('inbox');
+          // else show the email
           } else {
             mail_view(id)
           }
+          // After archive / unarchive load inbox page
+          load_mailbox('inbox');
         });
       });
   });
 }
+
+
 
 function send_email() {
 
@@ -155,8 +164,10 @@ function send_email() {
   });
 }
 
-function mail_view(id){
 
+
+function mail_view(id){
+  // cHange mails: read to true
   fetch(`/emails/${id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -168,9 +179,11 @@ function mail_view(id){
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#mail-view').style.display = 'block';
 
+  // CLear the old view
   const mail_view = document.querySelector('#mail-view');
   mail_view.innerHTML = '';
 
+  // Create all elements
   const mail = document.createElement('div');
   const from = document.createElement('p');
   const to = document.createElement('p');
@@ -178,9 +191,11 @@ function mail_view(id){
   const timestamp = document.createElement('p');
   const body = document.createElement('p');
 
+  // Get the mail data
   fetch(`/emails/${id}`)
   .then(response => response.json())
   .then(email => {
+      // Put values in elements
       from.innerHTML = `<b>From: </b>${email.sender}`;
       to.innerHTML = `<b>To: </b>${email.recipients}`;
       subject.innerHTML = `<b>Subject: </b>${email.subject}`;
@@ -192,9 +207,7 @@ function mail_view(id){
       reply.classList.add('btn', 'btn-sm', 'btn-outline-primary');
       reply.innerText = 'Reply';
 
-      reply.addEventListener('click', function() {
-        // Code to handle "Reply" button click
-      });
+      reply.addEventListener('click', reply_mail(id));
 
       mail.appendChild(from);
       mail.appendChild(to);
@@ -205,4 +218,9 @@ function mail_view(id){
     
       mail_view.appendChild(mail);
   });
+}
+
+function reply_mail(id) {
+    // TODO
+    
 }
