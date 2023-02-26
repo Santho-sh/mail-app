@@ -59,6 +59,9 @@ function load_mailbox(mailbox) {
         mails.classList.add('mail');
         mails.setAttribute('data-id', email.id)
 
+        if (!email.read && mailbox==='inbox'){
+          mails.classList.add('unread')
+        }
         const reci = document.createElement('p');
         reci.classList.add('mail-recipients');
         reci.innerHTML = email.recipients;
@@ -69,6 +72,21 @@ function load_mailbox(mailbox) {
         sub.innerHTML = email.subject;
         mails.appendChild(sub);
 
+
+        const archive = document.createElement('button');
+        archive.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+        if (mailbox === 'inbox'){
+          archive.innerText = 'Archive';
+          archive.classList.add('archive')
+          mails.appendChild(archive);
+
+        } else if (mailbox === 'archive') {
+          archive.innerText = 'Unarchive';
+          archive.classList.add('unarchive')
+          mails.appendChild(archive);
+        }
+        
+
         const time = document.createElement('p');
         time.classList.add('mail-time');
         time.innerHTML = email.timestamp;
@@ -78,10 +96,35 @@ function load_mailbox(mailbox) {
 
       })
 
+      const archive = document.querySelector('.archive');
+      const unarchive = document.querySelector('.unarchive');
+
       document.querySelectorAll('.mail').forEach(function(mail) {
         mail.addEventListener('click', function(event) {
+
           const id = event.target.parentElement.dataset.id;
-          mail_view(id)
+
+          //If user clicks archive button then archive the email
+          if (event.target === archive){
+            fetch(`/emails/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({
+                  archived: true
+              })
+            });
+            load_mailbox('inbox');
+          // else show the email
+          }else if (event.target === unarchive) {
+            fetch(`/emails/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({
+                  archived: false
+              })
+            });
+            load_mailbox('archive');
+          } else {
+            mail_view(id)
+          }
         });
       });
   });
@@ -113,6 +156,13 @@ function send_email() {
 }
 
 function mail_view(id){
+
+  fetch(`/emails/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+        read: true
+    })
+  });
 
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';

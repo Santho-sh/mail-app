@@ -35,3 +35,13 @@ textarea {
     color: gray;
     right: 0;
 }
+
+.archive {
+    position: absolute;
+    right: 11.5rem;
+}
+
+
+.unread {
+    background: rgb(223, 217, 217);
+}
