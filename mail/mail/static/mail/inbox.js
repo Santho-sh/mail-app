@@ -137,15 +137,22 @@ function mail_view(id){
       timestamp.innerHTML = `<b>Timestamp: </b>${email.timestamp}`;
       body.innerHTML = email.body;
 
-      console.log(body)
+      // Create Reply button
+      const reply = document.createElement('button');
+      reply.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+      reply.innerText = 'Reply';
+
+      reply.addEventListener('click', function() {
+        // Code to handle "Reply" button click
+      });
+
+      mail.appendChild(from);
+      mail.appendChild(to);
+      mail.appendChild(subject);
+      mail.appendChild(timestamp);
+      mail.appendChild(reply);
+      mail.appendChild(body);
+    
+      mail_view.appendChild(mail);
   });
-
-  mail.appendChild(from);
-  mail.appendChild(to);
-  mail.appendChild(subject);
-  mail.appendChild(timestamp);
-  mail.appendChild(body);
-
-  mail_view.appendChild(mail)
-
 }
