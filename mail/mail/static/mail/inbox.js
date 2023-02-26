@@ -69,13 +69,12 @@ function load_mailbox(mailbox) {
         mails.appendChild(sub);
 
         const time = document.createElement('p');
-        time.classList.add('mail-subject');
+        time.classList.add('mail-time');
         time.innerHTML = timestamp;
         mails.appendChild(time);
 
         emailView.appendChild(mails)
 
-        load_mailbox('sent')
       })
   });
 }
@@ -101,5 +100,6 @@ function send_email() {
     // TODO : display message
     let message = document.querySelector('#message');
     message.innerHTML =  result;
+
   });
 }
