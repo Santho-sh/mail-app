@@ -66,8 +66,13 @@ function load_mailbox(mailbox) {
           mails.classList.add('unread')
         }
         const reci = document.createElement('p');
-        reci.classList.add('mail-recipients');
-        reci.innerHTML = email.recipients;
+        if (mailbox === 'sent') {
+          reci.innerHTML = email.recipients;
+        }
+        else {
+          reci.innerHTML = email.sender;
+        }
+        reci.classList.add('mail-sender');
         mails.appendChild(reci);
 
         const sub = document.createElement('p');
@@ -205,6 +210,31 @@ function mail_view(id){
   });
 }
 
+
+
 function reply_mail(id) {
-    // TODO
+
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#compose-view').style.display = 'block';
+  document.querySelector('#mail-view').style.display = 'none';
+
+
+  fetch(`/emails/${id}`)
+  .then(response => response.json())
+  .then(email => {
+    
+    let subject = email.subject;
+    if (!subject.startsWith('Re:')) {
+        subject = `Re: ${subject}`;
+    }
+
+    let body = `On ${email.timestamp} ${email.sender} wrote: ${email.body}`
+
+    document.querySelector('#compose-recipients').value = email.sender;
+
+    document.querySelector('#compose-subject').value = subject;
+
+    document.querySelector('#compose-body').value = body;
+
+  });
 }
