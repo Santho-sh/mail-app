@@ -46,18 +46,6 @@ function load_mailbox(mailbox) {
   .then(emails => {
       emails.forEach(email => {
 
-        // Sample output
-        // {
-        //   "id": 100,
-        //   "sender": "foo@example.com",
-        //   "recipients": ["bar@example.com"],
-        //   "subject": "Hello!",
-        //   "body": "Hello, world!",
-        //   "timestamp": "Jan 2 2020, 12:00 AM",
-        //   "read": false,
-        //   "archived": false
-        // },
-
         const mails = document.createElement('div');
         mails.classList.add('mail');
         mails.setAttribute('data-id', email.id);
@@ -203,7 +191,8 @@ function mail_view(id){
       to.innerHTML = `<b>To: </b>${email.recipients}`;
       subject.innerHTML = `<b>Subject: </b>${email.subject}`;
       timestamp.innerHTML = `<b>Timestamp: </b>${email.timestamp}`;
-      body.innerHTML = email.body;
+
+      body.innerHTML = email.body.replace(/\n/g, '<br>');
 
       // Reply button action
       document.querySelector('.reply').addEventListener('click', () => reply_mail(id));
@@ -228,7 +217,7 @@ function reply_mail(id) {
         subject = `Re: ${subject}`;
     }
 
-    let body = `On ${email.timestamp} ${email.sender} wrote: ${email.body}`
+    let body = `On ${email.timestamp} ${email.sender} wrote: ${email.body}\n`
 
     document.querySelector('#compose-recipients').value = email.sender;
 
