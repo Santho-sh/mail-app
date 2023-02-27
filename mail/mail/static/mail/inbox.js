@@ -141,8 +141,6 @@ function send_email() {
   const subject = document.querySelector('#compose-subject').value;
   const body = document.querySelector('#compose-body').value;
 
-  console.log(recipients, subject, body)
-
   fetch('/emails', {
     method: "POST",
     body: JSON.stringify({
@@ -150,14 +148,8 @@ function send_email() {
       subject: subject,
       body: body,
     })
-  })
-  .then(response => response.JSON())
-  .then(result => {
-    // TODO : display message
-    let message = document.querySelector('#message');
-    message.innerHTML =  result;
-
   });
+  load_mailbox('sent');
 }
 
 
