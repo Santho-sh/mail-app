@@ -49,7 +49,7 @@ textarea {
 }
 
 .unread {
-    background: rgb(223, 217, 217);
+    background: rgba(0, 0, 0, 0.138);
 }
 
 #mail-view div{
