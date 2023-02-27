@@ -60,7 +60,7 @@ function load_mailbox(mailbox) {
 
         const mails = document.createElement('div');
         mails.classList.add('mail');
-        mails.setAttribute('data-id', email.id)
+        mails.setAttribute('data-id', email.id);
 
         if (!email.read && mailbox==='inbox'){
           mails.classList.add('unread')
@@ -117,6 +117,7 @@ function load_mailbox(mailbox) {
                   archived: true
               })
             });
+            location.reload(true);
           // Clicks unarchive button the unarchive email
           } else if (event.target === unarchive) {
             fetch(`/emails/${id}`, {
@@ -126,12 +127,13 @@ function load_mailbox(mailbox) {
               })
             });
             load_mailbox('inbox');
+            // Reload the current data
+            location.reload(true);
           // else show the email
           } else {
-            mail_view(id)
+            mail_view(id);
           }
-          // After archive / unarchive load inbox page
-          load_mailbox('inbox');
+
         });
       });
   });
@@ -167,7 +169,12 @@ function send_email() {
 
 
 function mail_view(id){
-  // cHange mails: read to true
+
+  // CLear the old view
+  const mail_view = document.querySelector('#mail-view');
+  mail_view.innerHTML = '';
+
+  // Change mails: read to true
   fetch(`/emails/${id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -179,17 +186,15 @@ function mail_view(id){
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#mail-view').style.display = 'block';
 
-  // CLear the old view
-  const mail_view = document.querySelector('#mail-view');
-  mail_view.innerHTML = '';
-
   // Create all elements
   const mail = document.createElement('div');
+  mail.classList.add('mail-view-div')
   const from = document.createElement('p');
   const to = document.createElement('p');
   const subject = document.createElement('p');
   const timestamp = document.createElement('p');
   const body = document.createElement('p');
+  body.classList.add('view-body')
 
   // Get the mail data
   fetch(`/emails/${id}`)
@@ -207,7 +212,7 @@ function mail_view(id){
       reply.classList.add('btn', 'btn-sm', 'btn-outline-primary');
       reply.innerText = 'Reply';
 
-      reply.addEventListener('click', reply_mail(id));
+      reply.addEventListener('click', () => reply_mail(id));
 
       mail.appendChild(from);
       mail.appendChild(to);
@@ -215,12 +220,11 @@ function mail_view(id){
       mail.appendChild(timestamp);
       mail.appendChild(reply);
       mail.appendChild(body);
-    
+
       mail_view.appendChild(mail);
   });
 }
 
 function reply_mail(id) {
     // TODO
-    
 }

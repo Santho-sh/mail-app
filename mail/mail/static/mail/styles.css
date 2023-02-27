@@ -22,7 +22,7 @@ textarea {
 .mail-recipients {
     
     font-weight: 700;
-    width: 14rem;
+    width: 16rem;
 }
 
 .mail-subject {
@@ -41,7 +41,21 @@ textarea {
     right: 11.5rem;
 }
 
+.unarchive {
+    position: absolute;
+    right: 11.5rem;
+}
 
 .unread {
     background: rgb(223, 217, 217);
+}
+
+.view-body {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid gray;
+}
+
+.mail-view-all b {
+    width: 10rem;
 }
