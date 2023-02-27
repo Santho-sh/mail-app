@@ -142,14 +142,19 @@ function send_email() {
   const body = document.querySelector('#compose-body').value;
 
   fetch('/emails', {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify({
       recipients: recipients,
       subject: subject,
       body: body,
     })
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log(result);
+    // Redirect to sent mailbox
+    load_mailbox('sent');
   });
-  load_mailbox('sent');
 }
 
 
