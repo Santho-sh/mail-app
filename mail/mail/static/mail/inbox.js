@@ -170,10 +170,6 @@ function send_email() {
 
 function mail_view(id){
 
-  // CLear the old view
-  const mail_view = document.querySelector('#mail-view');
-  mail_view.innerHTML = '';
-
   // Change mails: read to true
   fetch(`/emails/${id}`, {
     method: 'PUT',
@@ -186,15 +182,12 @@ function mail_view(id){
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#mail-view').style.display = 'block';
 
-  // Create all elements
-  const mail = document.createElement('div');
-  mail.classList.add('mail-view-div')
-  const from = document.createElement('p');
-  const to = document.createElement('p');
-  const subject = document.createElement('p');
-  const timestamp = document.createElement('p');
-  const body = document.createElement('p');
-  body.classList.add('view-body')
+  // Select all elements
+  const from = document.querySelector('.from')
+  const to = document.querySelector('.to');
+  const subject = document.querySelector('.subject');
+  const timestamp = document.querySelector('.timestamp');
+  const body = document.querySelector('.body');
 
   // Get the mail data
   fetch(`/emails/${id}`)
@@ -207,21 +200,8 @@ function mail_view(id){
       timestamp.innerHTML = `<b>Timestamp: </b>${email.timestamp}`;
       body.innerHTML = email.body;
 
-      // Create Reply button
-      const reply = document.createElement('button');
-      reply.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-      reply.innerText = 'Reply';
-
-      reply.addEventListener('click', () => reply_mail(id));
-
-      mail.appendChild(from);
-      mail.appendChild(to);
-      mail.appendChild(subject);
-      mail.appendChild(timestamp);
-      mail.appendChild(reply);
-      mail.appendChild(body);
-
-      mail_view.appendChild(mail);
+      // Reply button action
+      document.querySelector('.reply').addEventListener('click', () => reply_mail(id));
   });
 }
 

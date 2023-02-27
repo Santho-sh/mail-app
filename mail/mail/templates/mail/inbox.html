@@ -20,6 +20,12 @@
     
     <!-- Single mail view -->
     <div id="mail-view">
+        <div class='from'></div> 
+        <div class='to'></div> 
+        <div class='subject'></div>
+        <div class='timestamp'></div>
+        <button class='reply btn btn-sm btn-outline-primary'>Reply</button> 
+        <div class='body'></div> 
     </div>
 
     <div id="compose-view">
@@ -36,7 +42,7 @@
                 <input class="form-control" id="compose-subject" placeholder="Subject">
             </div>
             <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input type="submit" class="btn btn-primary"/>
+            <input type="submit" class="btn btn-primary submit"/>
         </form>
 
     </div>

@@ -4,6 +4,10 @@ textarea {
 
 /* Email view */
 
+.submit {
+    margin-block: 1rem;
+}
+
 .mail {
     font-size: 1.2rem;
     display: flex;
@@ -50,8 +54,15 @@ textarea {
     background: rgb(223, 217, 217);
 }
 
-.view-body {
-    margin-top: 1.5rem;
+#mail-view div{
+    margin-top: .7rem;
+}
+
+.reply {
+    margin-block: .7rem;
+}
+
+.body {
     padding-top: 1rem;
     border-top: 1px solid gray;
 }
