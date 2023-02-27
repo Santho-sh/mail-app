@@ -50,8 +50,8 @@ function load_mailbox(mailbox) {
         mails.classList.add('mail');
         mails.setAttribute('data-id', email.id);
 
-        if (!email.read && (mailbox==='inbox' || mailbox === 'archive')){
-          mails.classList.add('unread')
+        if (email.read && (mailbox==='inbox' || mailbox === 'archive')){
+          mails.classList.add('read')
         }
         const reci = document.createElement('p');
         if (mailbox === 'sent') {
@@ -72,7 +72,7 @@ function load_mailbox(mailbox) {
         // Else Unarchive button
         const archive = document.createElement('button');
         archive.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-        
+
         if (mailbox === 'inbox'){
           archive.innerText = 'Archive';
           archive.classList.add('archive')
